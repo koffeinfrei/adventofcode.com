@@ -1,7 +1,5 @@
-lines = File.readlines('./input').map(&:strip)
-calibration_values = lines.map do |line|
-  numbers = line.scan(/\d/)
-  "#{numbers.first}#{numbers.last}"
-end
-
-puts calibration_values.map(&:to_i).sum
+puts File.readlines('./input').map(&:strip)
+  .map { _1.scan(/\d/) }
+  .map { "#{_1.first}#{_1.last}" }
+  .map(&:to_i)
+  .sum

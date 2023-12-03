@@ -10,17 +10,17 @@ TRANSLATIONS = {
   'nine' => '9'
 }
 
-lines = File.readlines('./input').map(&:strip)
-calibration_values = lines.map do |line|
-  numbers = line
-    # include the words and digits
-    # use a positive lookahead (`?=()`) to allow overlapping matches such as
-    # "twone", which should match "two" and "one"
-    .scan(/(?=(#{Regexp.union(TRANSLATIONS.keys + [/\d/]).source}))/)
-    .flatten
-    # translate the words to its corresponding digit, keep the digits
-    .map { TRANSLATIONS.fetch(_1, _1) }
-  "#{numbers.first}#{numbers.last}"
-end
-
-puts calibration_values.map(&:to_i).sum
+puts File.readlines('./input').map(&:strip)
+  .map { |line|
+    line
+      # include the words and digits
+      # use a positive lookahead (`?=()`) to allow overlapping matches such as
+      # "twone", which should match "two" and "one"
+      .scan(/(?=(#{Regexp.union(TRANSLATIONS.keys + [/\d/]).source}))/)
+      .flatten
+      # translate the words to its corresponding digit, keep the digits
+      .map { TRANSLATIONS.fetch(_1, _1) }
+  }
+  .map { "#{_1.first}#{_1.last}" }
+  .map(&:to_i)
+  .sum
